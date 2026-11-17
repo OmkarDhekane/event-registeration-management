@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Event;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -23,7 +22,8 @@ class DatabaseSeeder extends Seeder
             'password' => env('ADMIN_PASSWORD', 'change-me-before-deployment'),
         ]);
 
-        Event::factory()->count(6)->create();
-        Event::factory()->unpublished()->count(2)->create();
+        if (app()->environment('local')) {
+            $this->call(DemoEventSeeder::class);
+        }
     }
 }
